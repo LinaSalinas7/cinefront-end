@@ -12,7 +12,7 @@ const Reservaciones = () => {
 
   const cargarReservaciones = async () => {
     try {
-      const response = await axios.get('/reservaciones');
+      const response = await axios.get('/reservaciones/{id}');
       setReservaciones(response.data);
     } catch (error) {
       console.error('Error al cargar las reservaciones:', error);
@@ -21,14 +21,12 @@ const Reservaciones = () => {
 
   const crearReservacion = async () => {
     try {
-      await axios.post('/reservaciones/crear', {
+      await axios.post('/reservaciones/add', {
         nombreCliente,
         cantidadAsientos
       });
       cargarReservaciones();
-      // Limpiar los campos después de crear la reservación
-      setNombreCliente('');
-      setCantidadAsientos(0);
+      
     } catch (error) {
       console.error('Error al crear la reservación:', error);
     }
@@ -36,7 +34,7 @@ const Reservaciones = () => {
 
   const cancelarReservacion = async (id) => {
     try {
-      await axios.delete(`/reservaciones/cancelar/${id}`);
+      await axios.delete(`/reservaciones/del/${id}`);
       cargarReservaciones();
     } catch (error) {
       console.error('Error al cancelar la reservación:', error);
